@@ -12,24 +12,18 @@ namespace K8S.DriverAPI.Data
 
         // define the db entities
         public virtual DbSet<Driver> Drivers { get; set; }
-        public virtual DbSet<Achievement> Achievements { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
 
+            Driver[] drivers =
+            [
+                new() { FirstName = "Lewis", LastName = "Hamilton", DriverNumber = 44, DateOfBirth = new DateTime(1985, 1, 7) },
+                new() { FirstName = "Max", LastName = "Verstappen", DriverNumber = 33, DateOfBirth = new DateTime(1997, 9, 30) },
+                new() { FirstName = "Charles", LastName = "Leclerc", DriverNumber = 16, DateOfBirth = new DateTime(1997, 10, 16) }
+            ];
 
-            // specified the relationship between the entities
-            modelBuilder.Entity<Achievement>(entity =>
-            {
-                entity
-                .HasOne(x => x.Driver)
-                .WithMany(x => x.Achievements)
-                .HasForeignKey(x => x.DriverId)
-                .OnDelete(DeleteBehavior.NoAction)
-                .HasConstraintName("FK_Achievements_Driver")
-                ;
-            });
+            builder.Entity<Driver>().HasData(drivers);
         }
     }
 }

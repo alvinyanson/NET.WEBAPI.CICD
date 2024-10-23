@@ -95,5 +95,17 @@ namespace K8S.DriverAPI.Controllers
             return Ok("Test connection works!");
         }
 
+        [HttpGet("TestCICD")]
+        public IActionResult TestCICD()
+        {
+            return Ok("CICD works!");
+        }
+
+        [HttpGet("TestSQL")]
+        public IActionResult TestSQL()
+        {
+            return Ok("SQL works! CICD works!");
+        }
+
     } 
 }
